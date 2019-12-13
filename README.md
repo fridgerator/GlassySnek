@@ -1,12 +1,14 @@
 # GlassySnek
 
-1. change the `PY_INCLUDE_PATH` variable include path `c/go.sh` to where you python headers are (Python.h, etc)
+### Linux instructions:
+
+1. make sure you have `python-config` executable in your path
+  * `python-config` might not be symlinked on your computer, it is an executable that comes with a standard python installation
+  * on mine (Arch linux), it was `/usr/bin/python3.6m-config` and I symlinked it to `/usr/bin/python-config`
 2. `cd` into `c` and run `sh go.sh`
 3. cp `c/libglassysnek.*` to `/usr/local/lib`
 4. in `src/lib_glassysnek.cr` change the ldflags to whatever the output of `python-config --ldflags` is
-  * `python-config` might not be symlinked on your computer, it is an executable that comes with a standard python installation
-  * on mine (Arch linux), it was `/usr/bin/python3.6m-config` and I symlinked it to `/usr/bin/python-config`
-
+5. run `crystal src/GlassySnek.cr`
 
 ## Installation
 
@@ -43,23 +45,3 @@ TODO: Write development instructions here
 ## Contributors
 
 - [Nick Franken](https://github.com/your-github-user) - creator and maintainer
-
-```
-{
-    "configurations": [
-        {
-            "name": "Linux",
-            "includePath": [
-                "${workspaceFolder}/**",
-                "/usr/include/python3.6m"
-            ],
-            "defines": [],
-            "compilerPath": "/usr/local/bin/gcc",
-            "cStandard": "c11",
-            "cppStandard": "c++17",
-            "intelliSenseMode": "clang-x64"
-        }
-    ],
-    "version": 4
-}
-```
