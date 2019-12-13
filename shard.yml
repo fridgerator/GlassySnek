@@ -1,0 +1,9 @@
+name: GlassySnek
+version: 0.1.0
+
+authors:
+  - Nick Franken <shnick@gmail.com>
+
+crystal: 0.31.1
+
+license: MIT
