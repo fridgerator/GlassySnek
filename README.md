@@ -1,8 +1,9 @@
 # GlassySnek
 
-1. `cd` into `c` and run `sh go.sh`
-2. cp `c/libglassysnek.*` to `/usr/local/lib`
-3. in `src/lib_glassysnek.cr` change the ldflags to whatever the output of `python-config --ldflags` is
+1. change the `PY_INCLUDE_PATH` variable include path `c/go.sh` to where you python headers are (Python.h, etc)
+2. `cd` into `c` and run `sh go.sh`
+3. cp `c/libglassysnek.*` to `/usr/local/lib`
+4. in `src/lib_glassysnek.cr` change the ldflags to whatever the output of `python-config --ldflags` is
   * `python-config` might not be symlinked on your computer, it is an executable that comes with a standard python installation
   * on mine (Arch linux), it was `/usr/bin/python3.6m-config` and I symlinked it to `/usr/bin/python-config`
 
