@@ -3,8 +3,8 @@
 ### Linux instructions:
 
 1. make sure you have `python-config` executable in your path
-  * `python-config` might not be symlinked on your computer, it is an executable that comes with a standard python installation
-  * on mine (Arch linux), it was `/usr/bin/python3.6m-config` and I symlinked it to `/usr/bin/python-config`
+    * `python-config` might not be symlinked on your computer, it is an executable that comes with a standard python installation
+    * on mine (Arch linux), it was `/usr/bin/python3.6m-config` and I symlinked it to `/usr/bin/python-config`
 2. `cd` into `c` and run `sh go.sh`
 3. cp `c/libglassysnek.*` to `/usr/local/lib`
 4. in `src/lib_glassysnek.cr` change the ldflags to whatever the output of `python-config --ldflags` is
