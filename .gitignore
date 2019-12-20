@@ -11,3 +11,4 @@ libglassysnek.a
 libglassysnek.o
 .vscode
 __pycache__
+.venv
