@@ -60,6 +60,4 @@ def build_regression_model():
       'depVariable':Variable('- ActualValues: the actual values of homes', cali_housing.target).to_dict()
     }
 
-    print("python dep: ", response['depVariable'], flush=True)
-
     return response

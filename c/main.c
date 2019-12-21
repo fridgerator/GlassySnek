@@ -104,22 +104,22 @@ Stat_t build_stat_t(PyObject *pVal)
       stat.desc = PyUnicode_AsUTF8(val);
     } else if (strncmp(cKey, "coef", 4) == 0) {
       stat.coef = PyFloat_AsDouble(val);
-    } else if (strncmp(cKey, "min", 4) == 0) {
-      stat.coef = PyFloat_AsDouble(val);
-    } else if (strncmp(cKey, "max", 4) == 0) {
-      stat.coef = PyFloat_AsDouble(val);
+    } else if (strncmp(cKey, "min", 3) == 0) {
+      stat.min = PyFloat_AsDouble(val);
+    } else if (strncmp(cKey, "max", 3) == 0) {
+      stat.max = PyFloat_AsDouble(val);
     } else if (strncmp(cKey, "mean", 4) == 0) {
-      stat.coef = PyFloat_AsDouble(val);
-    } else if (strncmp(cKey, "median", 4) == 0) {
-      stat.coef = PyFloat_AsDouble(val);
-    } else if (strncmp(cKey, "std", 4) == 0) {
-      stat.coef = PyFloat_AsDouble(val);
+      stat.mean = PyFloat_AsDouble(val);
+    } else if (strncmp(cKey, "median", 6) == 0) {
+      stat.median = PyFloat_AsDouble(val);
+    } else if (strncmp(cKey, "std", 3) == 0) {
+      stat.std = PyFloat_AsDouble(val);
     } else if (strncmp(cKey, "first", 4) == 0) {
-      stat.coef = PyFloat_AsDouble(val);
-    } else if (strncmp(cKey, "third", 4) == 0) {
-      stat.coef = PyFloat_AsDouble(val);
-    } else if (strncmp(cKey, "value", 4) == 0) {
-      stat.coef = PyFloat_AsDouble(val);
+      stat.first = PyFloat_AsDouble(val);
+    } else if (strncmp(cKey, "third", 5) == 0) {
+      stat.third = PyFloat_AsDouble(val);
+    } else if (strncmp(cKey, "value", 5) == 0) {
+      stat.value = PyFloat_AsDouble(val);
     }
   }
 
@@ -155,12 +155,36 @@ Output_t build_regression_model(void)
       const char *cKey = PyUnicode_AsUTF8(key);
 
       if (strncmp(cKey, "intercept", 9) == 0) {
-        fprintf(stderr, "found intercept\n");
         output.intercept = PyFloat_AsDouble(val);
       } else if (strncmp(cKey, "indepVariables", 14) == 0) {
+        Indep_variables_t indep_variables;
 
+        PyObject *idepvKeys = PyDict_Keys(val);
+        Py_ssize_t ipdepvSize = PyList_GET_SIZE(idepvKeys);
+
+        for (Py_ssize_t y = 0; y < ipdepvSize; y++) {
+          PyObject *ipdepvKey = PyList_GetItem(idepvKeys, y);
+          PyObject *idepvVal = PyDict_GetItem(val, ipdepvKey);
+
+          const char *idepvcKey = PyUnicode_AsUTF8(ipdepvKey);
+
+          if (strncmp(idepvcKey, "MedInc", 6) == 0) {
+            indep_variables.med_inc = build_stat_t(idepvVal);
+          } else if (strncmp(idepvcKey, "HouseAge", 8) == 0) {
+            indep_variables.house_age = build_stat_t(idepvVal);
+          } else if (strncmp(idepvcKey, "AveRooms", 8) == 0) {
+            indep_variables.ave_rooms = build_stat_t(idepvVal);
+          } else if (strncmp(idepvcKey, "AveBedrms", 9) == 0) {
+            indep_variables.ave_bedrms = build_stat_t(idepvVal);
+          } else if (strncmp(idepvcKey, "Latitude", 8) == 0) {
+            indep_variables.latitude = build_stat_t(idepvVal);
+          } else if (strncmp(idepvcKey, "Longitude", 9) == 0) {
+            indep_variables.longitude = build_stat_t(idepvVal);
+          }
+        }
+
+        output.indep_variables = indep_variables;
       } else if (strncmp(cKey, "depVariable", 11) == 0) {
-        fprintf(stderr, "found depVariable\n");
         output.dep_variable = build_stat_t(val);
       }
     }
@@ -168,7 +192,6 @@ Output_t build_regression_model(void)
   } else {
     fprintf(stderr, "something broke\n");
     // call did not work, do some error code stuff
-    // return -1;
   }
 
   return output;
